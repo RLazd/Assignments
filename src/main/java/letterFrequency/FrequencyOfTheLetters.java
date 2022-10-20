@@ -3,14 +3,17 @@ package letterFrequency;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FrequencyOfTheLetters {
-    public static final String PATH_TO_APP = "/Users/Ramona/IdeaProjects/assignments/src/main/java/letterFrequency/";
+    public static final String PATH_BEGINNING = "/textsForLetterFrequency/";
     private static final String ENGLISH_LETTERS = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
 
-    public static Map<String, Integer> generateFrequencyVocabulary(String nameOfTheFile) throws IOException {
+    public static Map<String, Integer> generateFrequencyVocabulary(String nameOfTheFile) throws IOException, URISyntaxException {
         String[] letterArray = ENGLISH_LETTERS.split(" ");
 
         Map<String, Integer> frequencyByLetter = new HashMap<>();
@@ -18,7 +21,8 @@ public class FrequencyOfTheLetters {
             frequencyByLetter.put(letter, 0);
         }
 
-        BufferedReader in = new BufferedReader(new FileReader(PATH_TO_APP + nameOfTheFile));
+        Path fullPath = Paths.get(FrequencyOfTheLetters.class.getResource(PATH_BEGINNING + nameOfTheFile).toURI());
+        BufferedReader in = new BufferedReader(new FileReader(fullPath.toFile()));
 
         String line;
         while ((line = in.readLine()) != null) {
@@ -42,4 +46,4 @@ public class FrequencyOfTheLetters {
 //
 //    Risinājumā jābūt iekļautam analizētajam tekstam TXT formātā, automatizētam testam un izpildes instrukcijai.
 
-//A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+

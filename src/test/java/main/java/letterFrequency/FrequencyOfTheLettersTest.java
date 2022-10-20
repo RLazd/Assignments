@@ -5,25 +5,24 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FrequencyOfTheLettersTest {
     @Test
-    public void shouldCountLetterBEqualTo20() throws IOException {
+    public void shouldCountLetterBEqualTo20() throws IOException, URISyntaxException {
         // GIVEN - a file with 20 b characters
         FrequencyOfTheLetters frequency = new FrequencyOfTheLetters();
         String content = "b".repeat(20);
         String fileName = "b.txt";
-        String path = frequency.PATH_TO_APP + fileName;
-        Files.write(Paths.get(path), content.getBytes());
+        Path path = Paths.get(FrequencyOfTheLetters.class.getResource(frequency.PATH_BEGINNING + fileName).toURI());
+        Files.write(Paths.get(path.toUri()), content.getBytes());
 
         // WHEN - function generateFrequencyVocabulary is given the file
         Map<String, Integer> occurrencesByLetter = frequency.generateFrequencyVocabulary(fileName);
@@ -34,7 +33,7 @@ class FrequencyOfTheLettersTest {
     }
 
     @Test
-    public void shouldCountLetterInTextOfMoreThan1000Words() throws IOException {
+    public void shouldCountLetterInTextOfMoreThan1000Words() throws IOException, URISyntaxException {
         // GIVEN - a file with 2108 words
         FrequencyOfTheLetters frequency = new FrequencyOfTheLetters();
         String fileName = "text.txt";
